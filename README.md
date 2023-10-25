@@ -6,9 +6,10 @@ Following the web application described in the https://hypermedia.systems book u
 ## Technology Stack
 - [Golang](https://go.dev/) as the programming language
 - [Fiber](https://docs.gofiber.io/) as the web framework
-- [Templ](https://templ.guide/) as the server-side templating engine
+- [Go Templates](https://pkg.go.dev/text/template) as the server-side templating engine
+- [Tailwind CSS](https://tailwindcss.com/) for the client side styling
+- [HTMX](https://htmx.org/) for the client side hypermedia management
 - [Air](https://github.com/cosmtrek/air) for live reloading
-- [HTMX](https://htmx.org/) for the client side
 
 ## Getting Started
 
@@ -37,7 +38,7 @@ Running the `make build` command will build the application, generating any miss
 $ make build
 ```
 
-### Templating
+### Preparing
 The project uses [Templ](https://templ.guide/) as the server-side templating engine. The templates are in the [templates](./templates/) directory and are named with the `.templ` extension. Templ will generate the corresponding `*_templ.go` files in the [templates](./templates/) directory during the prepare step of the build process.
 
 Running the `make prepare` command will generate any missing template files using Templ. The generation command is run automatically when running or building the application via `make`, `make run`, `make dev`, or `make build`.

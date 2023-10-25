@@ -1,8 +1,8 @@
 .PHONY: run dev build prepare clean
 
 # Runs the application
-run: templates/*_templ.go
-	go run main.go
+run: public/css/style.css
+	go run .
 
 # Runs the application with hot reloading
 dev: bin/main
@@ -11,15 +11,15 @@ dev: bin/main
 ## Builds the application
 build: bin/main
 
-# Runs any preparation steps, in this case generating the templated files
-prepare: templates/*_templ.go
+# Runs any preparation steps
+prepare: public/css/style.css
 
 # Removes any generated files and directories
 clean:
-	rm -rf bin tmp templates/*_templ.go
+	rm -rf bin tmp public/css/style.css
 
-bin/main: templates/*_templ.go
-	go build -o bin/main main.go
+bin/main: *.go contact/*.go public/css/style.css
+	go build -o bin/main .
 
-templates/%_templ.go: templates/%.templ
-	go run github.com/a-h/templ/cmd/templ@v0.2.408 generate
+public/css/style.css: templates/*.html
+	tailwindcss -o public/css/style.css

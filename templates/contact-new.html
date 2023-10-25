@@ -1,0 +1,52 @@
+{{ define "content" }}
+<h1 class="mx-auto text-xl">New Contact</h1>
+<form action="/contacts/new" method="post">
+  <div class="pb-6">
+    <label for="first_name" class="block text-sm font-medium text-gray-900">First Name</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
+      id="first_name" type="text" name="first_name" placeholder="John"
+      {{ if ne .FirstName "" }}
+        value={{.FirstName}}
+      {{ end }}
+    />
+    <span class="error">{{ .Errors.FirstName }}</span>
+  </div>
+  <div class="pb-6">
+    <label for="last_name" class="block text-sm font-medium text-gray-900">Last Name</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
+      id="last_name" type="text" name="last_name" placeholder="Smith"
+      {{ if ne .LastName "" }}
+        value={{.LastName}}
+      {{ end }}
+    />
+    <span class="error">{{ .Errors.LastName }}</span>
+  </div>
+  <div class="pb-6">
+    <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
+      id="email" type="email" name="email" placeholder="john.smith@gmail.com"
+      {{ if ne .Email "" }}
+        value={{.Email}}
+      {{ end }}
+    />
+    <span class="error">{{ .Errors.Email }}</span>
+  </div>
+  <div class="pb-6">
+    <label for="phone" class="block text-sm font-medium text-gray-900">Phone</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
+      id="phone" type="tel" name="phone" placeholder="8005551234"
+      {{ if ne .Phone "" }}
+        value={{.Phone}}
+      {{ end }}
+    />
+    <span class="error">{{ .Errors.Phone }}</span>
+  </div>
+  <button class="text-white bg-blue-500 px-5 h-10 rounded-lg" type="submit">Save</button>
+  <button class="text-gray-500 border-2 border-gray-500 bg-white px-5 h-10 rounded-lg"
+    hx-get="/contacts"
+    hx-target="body"
+    hx-push-url="true">
+    Back to Contacts
+  </button>
+</form>
+{{ end }}

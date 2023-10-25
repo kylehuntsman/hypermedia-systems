@@ -1,0 +1,27 @@
+{{ define "content" }}
+<h1 class="text-xl">{{ .FirstName }} {{ .LastName }}</h1>
+  
+<div>
+  <div>
+    <span class="font-medium">Phone:</span> {{ .Phone }}
+  </div>
+  <div>
+  <span class="font-medium">Email:</span> {{ .Email }}
+  </div>
+</div>
+
+<div>
+  <button class="text-white bg-blue-500 px-5 h-10 rounded-lg"
+    hx-get="/contacts/{{ .Id }}/edit"
+    hx-target="body"
+    hx-push-url="true">
+    Edit
+  </button>
+  <button class="text-gray-500 border-2 border-gray-500 bg-white px-5 h-10 rounded-lg"
+    hx-get="/contacts"
+    hx-target="body"
+    hx-push-url="true">
+    Back to Contacts
+  </button>
+</div>
+{{ end }}

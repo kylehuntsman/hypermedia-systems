@@ -1,0 +1,52 @@
+{{ define "content" }}
+<form class="text-gray-600" action="/contacts" method="get">
+  <div class="flex flex-row justify-center gap-1">
+    <input class="w-1/2 border-2 border-gray-300 bg-white px-5 h-10 rounded-lg focus:outline-none"
+      type="search" name="q" placeholder="Search Contacts"
+      {{ if ne .SearchQuery "" }}
+        value={{.SearchQuery}}
+      {{end}}
+    />
+    <button class="bg-blue-500 px-5 h-10 rounded-lg" type="submit">
+      <svg class="text-gray-600 h-4 w-4 fill-white" xmlns="http://www.w3.org/2000/svg"
+        height="1em" viewBox="0 0 512 512">
+        <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+      </svg>
+    </button>
+  </div>
+</form>
+
+<div>
+  <button class="bg-blue-500 px-5 h-10 rounded-lg text-white"
+    hx-get="/contacts/new"
+    hx-target="body"
+    hx-push-url="true">
+    Add Contact
+  </button>
+</div>
+<table class="text-left text-gray-500 rounded-lg">
+  <thead class="text-sm text-gray-700 uppercase bg-gray-100">
+    <tr>
+      <th scope="col" class="px-6 py-3">First</th>
+      <th scope="col" class="px-6 py-3">Last</th>
+      <th scope="col" class="px-6 py-3">Phone</th>
+      <th scope="col" class="px-6 py-3">Email</th>
+      <th scope="col" class="px-6 py-3">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{range .Contacts}}
+      <tr class="bg-white border-b">
+        <td class="px-6 py-3">{{ .FirstName }}</td>
+        <td class="px-6 py-3">{{ .LastName }}</td>
+        <td class="px-6 py-3">{{ .Phone }}</td>
+        <td class="px-6 py-3">{{ .Email }}</td>
+        <td class="px-6 py-3">
+          <a class="text-blue-500 hover:underline" href="/contacts/{{.Id}}">View</a>
+          <a class="text-blue-500 hover:underline" href="/contacts/{{.Id}}/edit">Edit</a>
+        </td>
+      </tr>
+    {{end}}
+  </tbody>
+</table>
+{{ end }}

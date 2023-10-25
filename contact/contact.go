@@ -25,6 +25,17 @@ func EmptyContact() *Contact {
 	}
 }
 
+func (c *Contact) Copy() *Contact {
+	return &Contact{
+		Id:        c.Id,
+		FirstName: c.FirstName,
+		LastName:  c.LastName,
+		Phone:     c.Phone,
+		Email:     c.Email,
+		Errors:    map[string]string{},
+	}
+}
+
 type ContactDB struct {
 	contacts []*Contact
 }
@@ -34,8 +45,8 @@ func NewContactDB() *ContactDB {
 }
 
 func (db *ContactDB) AddContact(contact *Contact) bool {
-	if len(contact.FirstName) > 10 {
-		contact.Errors["FirstName"] = "First name must be shorter than 10 characters"
+	if db.HasEmail(contact.Id, contact.Email) {
+		contact.Errors["Email"] = "Email must be unique"
 		return false
 	}
 
@@ -50,6 +61,15 @@ func (db *ContactDB) GetContactById(id uuid.UUID) (*Contact, bool) {
 		}
 	}
 	return EmptyContact(), false
+}
+
+func (db *ContactDB) HasEmail(id uuid.UUID, email string) bool {
+	for _, c := range db.contacts {
+		if c.Id != id && c.Email == email {
+			return true
+		}
+	}
+	return false
 }
 
 func (db *ContactDB) GetAllContacts() []*Contact {
@@ -72,6 +92,11 @@ func (db *ContactDB) DeleteContactById(id uuid.UUID) bool {
 }
 
 func (db *ContactDB) UpdateContact(contact *Contact) bool {
+	if db.HasEmail(contact.Id, contact.Email) {
+		contact.Errors["Email"] = "Email must be unique"
+		return false
+	}
+
 	for i, c := range db.contacts {
 		if c.Id == contact.Id {
 			db.contacts[i] = contact

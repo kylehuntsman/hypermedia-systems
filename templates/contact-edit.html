@@ -1,0 +1,65 @@
+{{ define "content" }}
+<h1 class="mx-auto text-xl">Edit Contact</h1>
+<form action="/contacts/{{ .Id }}/edit" method="post">
+  <div class="pb-6">
+    <label for="first_name" class="block text-sm font-medium {{ if .Errors.FirstName }}text-red-500{{ else }}text-gray-900{{ end }}">First Name</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5 {{ if .Errors.FirstName }}outline-red-500 ring-red-500 border-red-500{{ else }}focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500{{ end }}"
+      id="first_name" type="text" name="first_name" placeholder="John"
+      {{ if ne .FirstName "" }}
+        value={{.FirstName}}
+      {{ end }}
+    />
+    <span class="text-red-500 text-sm">{{ .Errors.FirstName }}</span>
+  </div>
+  <div class="pb-6">
+    <label for="last_name" class="block text-sm font-medium {{ if .Errors.LastName }}text-red-500{{ else }}text-gray-900{{ end }}">Last Name</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5 {{ if .Errors.LastName }}outline-red-500 ring-red-500 border-red-500{{ else }}focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500{{ end }}"
+      id="last_name" type="text" name="last_name" placeholder="Smith"
+      {{ if ne .LastName "" }}
+        value={{.LastName}}
+      {{ end }}
+    />
+    <span class="text-red-500 text-sm">{{ .Errors.LastName }}</span>
+  </div>
+  <div class="form-email pb-6">
+    <label for="email" class="block text-sm font-medium {{ if .Errors.Email }}text-red-500{{ else }}text-gray-900{{ end }}">Email</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5 {{ if .Errors.Email }}outline-red-500 ring-red-500 border-red-500{{ else }}focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500{{ end }}"
+      id="email" type="email" name="email" placeholder="john.smith@gmail.com"
+      {{ if ne .Email "" }}
+        value={{.Email}}
+      {{ end }}
+      hx-get="/contacts/{{ .Id }}/edit/email"
+      hx-swap="outerHTML"
+      hx-select=".form-email"
+      hx-target="closest div"
+    />
+    <span class="error text-red-500 text-sm">{{ .Errors.Email }}</span>
+  </div>
+  <div class="pb-6">
+    <label for="phone" class="block text-sm font-medium {{ if .Errors.Phone }}text-red-500{{ else }}text-gray-900{{ end }}">Phone</label>
+    <input class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg w-full p-2.5 {{ if .Errors.Phone }}outline-red-500 ring-red-500 border-red-500{{ else }}focus:outline-blue-500 focus:ring-blue-500 focus:border-blue-500{{ end }}"
+      id="phone" type="tel" name="phone" placeholder="8005551234"
+      {{ if ne .Phone "" }}
+        value={{.Phone}}
+      {{ end }}
+    />
+    <span class="text-red-500 text-sm">{{ .Errors.Phone }}</span>
+  </div>
+  <div class="flex gap-1">
+    <button class="text-white bg-blue-500 px-5 h-10 rounded-lg" type="submit">Save</button>
+    <button class="text-white bg-red-500 px-5 h-10 rounded-lg"
+      hx-delete="/contacts/{{ .Id }}"
+      hx-target="body"
+      hx-push-url="true"
+      hx-confirm="Are you sure you want to delete this contact?">
+      Delete
+    </button>
+    <button class="text-gray-500 border-2 border-gray-500 bg-white px-5 h-10 rounded-lg float-right"
+      hx-get="/contacts"
+      hx-target="body"
+      hx-push-url="true">
+      Back to Contacts
+    </button>
+  </div>
+</form>
+{{ end }}
